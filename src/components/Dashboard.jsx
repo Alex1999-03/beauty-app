@@ -139,8 +139,8 @@ export function Dashboard({ children }) {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              {children}
+            <Grid container spacing={2} justifyContent="flex-end">
+                {children}
             </Grid>
           </Container>
         </Box>
