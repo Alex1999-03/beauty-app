@@ -1,20 +1,33 @@
-import {
-  TableCell,
-  TableRow,
-  Grid,
-  Button,
-  TextField,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Grid, Button, TextField, MenuItem } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { DataTable } from "../components/DataTable";
+import { BrandTable } from "../components/BrandTable";
 import { useBrandForm } from "../hooks/useBrandForm";
 import { DialogForm } from "../components/DialogForm";
 import { useBrandFetch } from "../hooks/useBrandFetch";
 
 export function BrandPage() {
-  const { open, formik, handleClose, handleOpen } = useBrandForm();
-  const { brands } = useBrandFetch();
+  const {
+    open,
+    formik,
+    handleClose,
+    handleOpen,
+    handleSelectBrand,
+    selectBrand,
+  } = useBrandForm();
+  const { brands, isLoading } = useBrandFetch();
+
+  const options = [
+    {
+      value: true,
+      label: "Activo",
+    },
+    {
+      value: false,
+      label: "Inactivo",
+    },
+  ];
+
+  if(isLoading) return 'Loading...';
 
   return (
     <>
@@ -30,26 +43,11 @@ export function BrandPage() {
         </Button>
       </Grid>
       <Grid item xs={12}>
-        <DataTable headers={["ID", "Nombre", "Acciones"]}>
-          {brands?.map((brand, index) => (
-            <TableRow key={brand.id}>
-              <TableCell component="th" scope="row">
-                {index + 1}
-              </TableCell>
-              <TableCell>{brand.name}</TableCell>
-              <TableCell>
-                <Button
-                  variant="contained"
-                  color="success"
-                  aria-label="edit"
-                  startIcon={<EditIcon />}
-                >
-                  Editar
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </DataTable>
+        <BrandTable
+          brands={brands}
+          handleSelectBrand={handleSelectBrand}
+          headers={["Marca", "Estado", "Acciones"]}
+        />
       </Grid>
       <DialogForm
         title={"Crear Marca"}
@@ -73,6 +71,28 @@ export function BrandPage() {
                 helperText={formik.touched.name && formik.errors.name}
               />
             </Grid>
+            {selectBrand && (
+              <Grid item xs={12}>
+                <TextField
+                  id="isActive"
+                  name="isActive"
+                  select
+                  label={"Estado"}
+                  value={formik.values.isActive}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.isActive && Boolean(formik.errors.isActive)
+                  }
+                  helperText={formik.touched.isActive && formik.errors.isActive}
+                >
+                  {options.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            )}
             <Grid item>
               <Button variant="contained" color="error" onClick={handleClose}>
                 Cancelar

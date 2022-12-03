@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const brandAPI = axios.create({ baseURL: "https://localhost:7284/api/Brand" });
+const brandAPI = axios.create({
+  baseURL: "https://localhost:7284/api/Brand",
+});
 
 export const getBrands = async () => {
   const res = await brandAPI.get("/");
