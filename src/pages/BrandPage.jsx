@@ -27,7 +27,7 @@ export function BrandPage() {
     },
   ];
 
-  if(isLoading) return 'Loading...';
+  if (isLoading) return "Loading...";
 
   return (
     <>
@@ -74,6 +74,7 @@ export function BrandPage() {
             {selectBrand && (
               <Grid item xs={12}>
                 <TextField
+                  fullWidth
                   id="isActive"
                   name="isActive"
                   select
