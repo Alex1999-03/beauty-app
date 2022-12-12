@@ -50,7 +50,7 @@ export function BrandPage() {
         />
       </Grid>
       <DialogForm
-        title={"Crear Marca"}
+        title={selectBrand ? "Editar Marca" : "Crear Marca"}
         maxWidth={"xs"}
         open={open}
         handleClose={handleClose}

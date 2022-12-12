@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useFormik } from "formik";
 import { BrandSchema } from "../schemas/BrandSchema";
-import { createBrand, editBrand } from "../services/brandService";
+import { createBrand, editBrand } from "../services/brand.service";
 
 export function useBrandForm() {
   const [selectBrand, setSelectBrand] = useState(null);
