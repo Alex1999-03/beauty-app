@@ -1,9 +1,9 @@
 import { Grid, Button, TextField, MenuItem } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { BrandTable } from "../components/BrandTable";
-import { useBrandForm } from "../hooks/useBrandForm";
+import { useBrandForm } from "../hooks/brand/useBrandForm";
 import { DialogForm } from "../components/DialogForm";
-import { useBrandFetch } from "../hooks/useBrandFetch";
+import { useBrandFetch } from "../hooks/brand/useBrandFetch";
 
 export function BrandPage() {
   const {
@@ -46,7 +46,6 @@ export function BrandPage() {
         <BrandTable
           brands={brands}
           handleSelectBrand={handleSelectBrand}
-          headers={["Marca", "Estado", "Acciones"]}
         />
       </Grid>
       <DialogForm

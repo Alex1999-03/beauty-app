@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBrands } from "../services/brand.service";
+import { getBrands } from "../../services/brand.service";
 
 export function useBrandFetch() {
   const {

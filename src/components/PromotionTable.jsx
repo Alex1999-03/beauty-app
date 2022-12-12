@@ -1,19 +1,20 @@
 import {
-  TableContainer,
+  Button,
   Paper,
   Table,
-  TableHead,
-  TableRow,
-  TableCell,
   TableBody,
+  TableCell,
+  TableContainer,
   TableFooter,
+  TableHead,
   TablePagination,
-  Button,
+  TableRow,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 
-export function BrandTable({ handleSelectBrand, brands }) {
+export function PromotionTable({ promotions }) {
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -32,26 +33,28 @@ export function BrandTable({ handleSelectBrand, brands }) {
         <Table sx={{ minwidth: 650 }} aria-label="data-table" size={"small"}>
           <TableHead>
             <TableRow>
-              {["Marca", "Estado", "Acciones"].map((header) => (
+              {["Presentación", "Descuento", "Fecha inicio", "Fecha fin", "Acciones"].map((header) => (
                 <TableCell key={header}>{header}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? brands.slice(
+              ? promotions?.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : brands
-            ).map((brand, index) => (
-              <TableRow key={brand.id}>
-                <TableCell>{brand.name}</TableCell>
-                <TableCell>{brand.isActive ? "Activo" : "Inactivo"}</TableCell>
+              : promotions
+            ).map((promotion, index) => (
+              <TableRow key={promotion.id}>
+                <TableCell>{promotion.description}</TableCell>
+                <TableCell>{promotion.discount}</TableCell>
+                <TableCell>{new Date(promotion.startDate).toLocaleDateString()}</TableCell>
+                <TableCell>{new Date(promotion.endDate).toLocaleDateString()}</TableCell>
                 <TableCell>
                   <Button
                     size={"small"}
-                    onClick={() => handleSelectBrand(brand)}
+                    // onClick={() => handleSelectCategory(category)}
                     variant="contained"
                     color="success"
                     aria-label="edit"
@@ -69,7 +72,7 @@ export function BrandTable({ handleSelectBrand, brands }) {
                 rowsPerPageOptions={[5, 10, 25]}
                 colSpan={3}
                 rowsPerPage={rowsPerPage}
-                count={brands.length}
+                count={promotions.length}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
