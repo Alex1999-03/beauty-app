@@ -1,9 +1,19 @@
-import { Grid, Button, TextField, MenuItem } from "@mui/material";
+import {
+  Grid,
+  Button,
+  TextField,
+  MenuItem,
+  TableRow,
+  TablePagination,
+  TableCell,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { BrandTable } from "../components/BrandTable";
+import EditIcon from "@mui/icons-material/Edit";
 import { useBrandForm } from "../hooks/brand/useBrandForm";
 import { DialogForm } from "../components/DialogForm";
 import { useBrandFetch } from "../hooks/brand/useBrandFetch";
+import { BaseTable } from "../components/BaseTable";
+import { usePagination } from "../hooks/usePagination";
 
 export function BrandPage() {
   const {
@@ -15,6 +25,8 @@ export function BrandPage() {
     selectBrand,
   } = useBrandForm();
   const { brands, isLoading } = useBrandFetch();
+  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
+    usePagination();
 
   const options = [
     {
@@ -43,9 +55,42 @@ export function BrandPage() {
         </Button>
       </Grid>
       <Grid item xs={12}>
-        <BrandTable
-          brands={brands}
-          handleSelectBrand={handleSelectBrand}
+        <BaseTable
+          headers={["Marca", "Estado", "Acciones"]}
+          body={(rowsPerPage > 0
+            ? brands.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : brands
+          ).map((brand) => (
+            <TableRow key={brand.id}>
+              <TableCell>{brand.name}</TableCell>
+              <TableCell>{brand.isActive ? "Activo" : "Inactivo"}</TableCell>
+              <TableCell>
+                <Button
+                  size={"small"}
+                  onClick={() => handleSelectBrand(brand)}
+                  variant="contained"
+                  color="success"
+                  aria-label="edit"
+                  startIcon={<EditIcon />}
+                >
+                  Editar
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+          pagination={
+            <TablePagination
+              component="div"
+              labelRowsPerPage="Filas por pagina: "
+              rowsPerPageOptions={[5, 10, 25]}
+              colSpan={3}
+              rowsPerPage={rowsPerPage}
+              count={brands.length}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          }
         />
       </Grid>
       <DialogForm
