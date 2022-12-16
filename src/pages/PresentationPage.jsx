@@ -4,14 +4,18 @@ import {
   TableCell,
   TablePagination,
   TableRow,
+  TextField,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import { BaseTable } from "../components/BaseTable";
 import { usePresentationFetch } from "../hooks/presentation/usePresentationFetch";
+import { usePresentationForm } from "../hooks/presentation/usePresentationForm";
 import { usePagination } from "../hooks/usePagination";
+import { DialogForm } from "../components/DialogForm";
 
 export function PresentationPage() {
+  const { formik, handleClose, handleOpen, open } = usePresentationForm();
   const { presentations, isLoading } = usePresentationFetch();
   const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
     usePagination();
@@ -22,6 +26,7 @@ export function PresentationPage() {
     <>
       <Grid item>
         <Button
+          onClick={handleOpen}
           variant="contained"
           color="secondary"
           arial-label="add"
@@ -71,6 +76,47 @@ export function PresentationPage() {
           }
         />
       </Grid>
+      <DialogForm
+        title={"Crear Categoría"}
+        maxWidth={"xs"}
+        open={open}
+        handleClose={handleClose}
+      >
+        <form onSubmit={formik.handleSubmit}>
+          <Grid container spacing={2} justifyContent="flex-end">
+            <Grid item xs={12}>
+              <TextField
+                autoFocus
+                fullWidth
+                autoComplete="off"
+                margin="dense"
+                id="description"
+                name="description"
+                label="Descripción"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.description &&
+                  Boolean(formik.errors.description)
+                }
+                helperText={
+                  formik.touched.description && formik.errors.description
+                }
+              />
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="error" onClick={handleClose}>
+                Cancelar
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button type={"submit"} variant="contained" color="secondary">
+                Guardar
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </DialogForm>
     </>
   );
 }

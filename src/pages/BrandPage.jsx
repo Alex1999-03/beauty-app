@@ -103,9 +103,10 @@ export function BrandPage() {
           <Grid container spacing={2} justifyContent="flex-end">
             <Grid item xs={12}>
               <TextField
-                autoFocus
-                margin="dense"
                 fullWidth
+                autoFocus
+                autoComplete="off"
+                margin="dense"
                 id="name"
                 name="name"
                 label="Marca"

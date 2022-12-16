@@ -9,7 +9,7 @@ export const getPresentations = async () => await (await presentationAPI.get("/"
 export const getPresentation = async (id) =>
   await (await presentationAPI.get(`/${id}`)).data;
 
-export const postPresentation = async (presentation) =>
+export const createPresentation = async (presentation) =>
   await (await presentationAPI.post("/", presentation)).data;
 
 export const putPrsentation = async (presentation) =>

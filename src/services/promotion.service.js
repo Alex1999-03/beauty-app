@@ -8,7 +8,7 @@ export const getPromotions = async () => await (await promotionAPI.get("/")).dat
 
 export const getPromotion = async (id) => await (await promotionAPI.get(`/${id}`)).data;
 
-export const postPromotion = async (promotion) =>
+export const createPromotion = async (promotion) =>
   await (await promotionAPI.post("/", promotion)).data;
 
 export const putPromotion = async (promotion) =>

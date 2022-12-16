@@ -8,7 +8,7 @@ export const getCategories = async () => await (await categoryAPI.get("/")).data
 
 export const getCategory = async (id) => await (await categoryAPI.get(`/${id}`)).data;
 
-export const postCategory = async (category) =>
+export const createCategory = async (category) =>
   await (await categoryAPI.post("/", category)).data;
 
 export const putCategory = async (category) =>

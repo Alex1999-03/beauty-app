@@ -12,9 +12,7 @@ import {
 export function BaseTable({ headers, body, footer, pagination }) {
   return (
     <Paper>
-      <TableContainer
-        sx={{ width: "100%", overflow: "hidden" }}
-      >
+      <TableContainer sx={{ width: "100%", overflow: "hidden" }}>
         <Table sx={{ minwidth: 650 }} aria-label="data-table" size={"small"}>
           <TableHead>
             <TableRow>
@@ -24,8 +22,8 @@ export function BaseTable({ headers, body, footer, pagination }) {
             </TableRow>
           </TableHead>
           <TableBody>{body}</TableBody>
+          <TableFooter>{footer}</TableFooter>
         </Table>
-        <TableFooter>{footer}</TableFooter>
       </TableContainer>
       {pagination}
     </Paper>
