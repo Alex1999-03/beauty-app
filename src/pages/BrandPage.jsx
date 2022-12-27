@@ -1,43 +1,30 @@
 import {
   Grid,
   Button,
-  TextField,
-  MenuItem,
   TableRow,
   TablePagination,
   TableCell,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import { useBrandForm } from "../hooks/brand/useBrandForm";
-import { DialogForm } from "../components/DialogForm";
-import { useBrandFetch } from "../hooks/brand/useBrandFetch";
+import { useBrandFetch } from "../hooks/useBrandFetch";
 import { BaseTable } from "../components/BaseTable";
 import { usePagination } from "../hooks/usePagination";
+import { BrandDialog } from "../components/BrandDialog";
+import { useState } from "react";
+import { useToggle } from "../hooks/useToggle";
 
 export function BrandPage() {
-  const {
-    open,
-    formik,
-    handleClose,
-    handleOpen,
-    handleSelectBrand,
-    selectBrand,
-  } = useBrandForm();
   const { brands, isLoading } = useBrandFetch();
   const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
     usePagination();
+  const [toggle, setToggle] = useToggle();
+  const [brand, setBrand] = useState(null);
 
-  const options = [
-    {
-      value: true,
-      label: "Activo",
-    },
-    {
-      value: false,
-      label: "Inactivo",
-    },
-  ];
+  const handleSelectItem = (item) => {
+    setToggle();
+    setBrand(item);
+  };
 
   if (isLoading) return "Loading...";
 
@@ -45,7 +32,7 @@ export function BrandPage() {
     <>
       <Grid item>
         <Button
-          onClick={handleOpen}
+          onClick={() => setToggle()}
           variant="contained"
           color="secondary"
           arial-label="add"
@@ -67,7 +54,7 @@ export function BrandPage() {
               <TableCell>
                 <Button
                   size={"small"}
-                  onClick={() => handleSelectBrand(brand)}
+                  onClick={() => handleSelectItem(brand)}
                   variant="contained"
                   color="success"
                   aria-label="edit"
@@ -93,65 +80,12 @@ export function BrandPage() {
           }
         />
       </Grid>
-      <DialogForm
-        title={selectBrand ? "Editar Marca" : "Crear Marca"}
-        maxWidth={"xs"}
-        open={open}
-        handleClose={handleClose}
-      >
-        <form onSubmit={formik.handleSubmit}>
-          <Grid container spacing={2} justifyContent="flex-end">
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                autoFocus
-                autoComplete="off"
-                margin="dense"
-                id="name"
-                name="name"
-                label="Marca"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-              />
-            </Grid>
-            {selectBrand && (
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="isActive"
-                  name="isActive"
-                  select
-                  label={"Estado"}
-                  value={formik.values.isActive}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.isActive && Boolean(formik.errors.isActive)
-                  }
-                  helperText={formik.touched.isActive && formik.errors.isActive}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-            )}
-            <Grid item>
-              <Button variant="contained" color="error" onClick={handleClose}>
-                Cancelar
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button type={"submit"} variant="contained" color="secondary">
-                Guardar
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </DialogForm>
+      <BrandDialog
+        open={toggle}
+        setOpen={setToggle}
+        brand={brand}
+        setBrand={setBrand}
+      />
     </>
   );
 }

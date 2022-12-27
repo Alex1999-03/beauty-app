@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPresentations } from "../../services/presentation.service";
+import { getPresentations } from "../services/presentation.service";
 
 export function usePresentationFetch() {
   const {

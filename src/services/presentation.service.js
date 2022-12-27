@@ -12,7 +12,7 @@ export const getPresentation = async (id) =>
 export const createPresentation = async (presentation) =>
   await (await presentationAPI.post("/", presentation)).data;
 
-export const putPrsentation = async (presentation) =>
+export const editPresentation = async (presentation) =>
   await (await presentationAPI.put(`/${presentation.id}`, presentation)).data;
 
 export const deletePresentation = async (id) =>

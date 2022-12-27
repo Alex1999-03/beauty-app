@@ -1,18 +1,18 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useFormik } from "formik";
-import { CategorySchema } from "../../schemas/CategorySchema";
-import { createCategory } from "../../services/category.service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { PresentationSchema } from "../schemas/PresentationSchema";
+import { createPresentation } from "../services/presentation.service";
 
-export function useCategoryForm() {
+export function usePresentationForm() {
   const [open, setOpen] = useState(false);
 
   const queryClient = useQueryClient();
 
-  const createCategoryMutation = useMutation({
-    mutationFn: createCategory,
+  const createPresentationMutation = useMutation({
+    mutationFn: createPresentation,
     onSuccess: () => {
-      queryClient.invalidateQueries("category");
+      queryClient.invalidateQueries("presentation");
     },
   });
 
@@ -26,17 +26,16 @@ export function useCategoryForm() {
   };
 
   const handleSave = (values) => {
-    createCategoryMutation.mutate(values);
-    handleClose()
+    createPresentationMutation.mutate(values);
+    handleClose();
   };
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: "",
-      isActive: undefined,
+      description: "",
     },
-    validationSchema: CategorySchema,
+    validationSchema: PresentationSchema,
     onSubmit: handleSave,
   });
 

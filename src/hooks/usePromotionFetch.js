@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPromotions } from "../../services/promotion.service";
+import { getPromotions } from "../services/promotion.service";
 
 export function usePromotionFetch() {
   const {
