@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { DialogForm } from "./DialogForm";
 import { BrandSchema } from "../schemas/BrandSchema";
-import { createBrand, editBrand } from "../services/brand.service";
+import { createBrand, editBrand } from "../services/brand.services";
 
 export function BrandDialog({ open, setOpen, brand, setBrand }) {
   const queryClient = useQueryClient();

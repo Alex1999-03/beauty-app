@@ -1,7 +1,7 @@
 import { Button, Grid, MenuItem, TextField } from "@mui/material";
 import { DialogForm } from "./DialogForm";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCategory, editCategory } from "../services/category.service";
+import { createCategory, editCategory } from "../services/category.services";
 import { useFormik } from "formik";
 import { CategorySchema } from "../schemas/CategorySchema";
 

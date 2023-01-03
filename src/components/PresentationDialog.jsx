@@ -5,7 +5,7 @@ import { DialogForm } from "./DialogForm";
 import {
   createPresentation,
   editPresentation,
-} from "../services/presentation.service";
+} from "../services/presentation.services";
 import { PresentationSchema } from "../schemas/PresentationSchema";
 
 export function PresentationDialog({

@@ -4,7 +4,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { PromotionSchema } from "../schemas/PromotionSchema";
-import { createPromotion, editPromotion } from "../services/promotion.service";
+import { createPromotion, editPromotion } from "../services/promotion.services";
 import { DialogForm } from "./DialogForm";
 
 export function PromotionDialog({ open, setOpen, promotion, setPromotion }) {
@@ -110,7 +110,6 @@ export function PromotionDialog({ open, setOpen, promotion, setPromotion }) {
                 label="Fecha inicio"
                 value={formik.values.startDate}
                 onChange={(value) => {
-                  console.log(value);
                   formik.setFieldValue("startDate", value, true);
                 }}
                 renderInput={(params) => (
