@@ -41,7 +41,6 @@ export function ProductPage() {
             "Precio de compra",
             "Precio de venta",
             "Stock",
-            "Rating",
             "Fecha de expiración",
           ]}
           body={(rowsPerPage > 0
@@ -54,11 +53,10 @@ export function ProductPage() {
             <TableRow key={product.id}>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.description}</TableCell>
-              <TableCell>{product.purchasePrice}</TableCell>
-              <TableCell>{product.sellPrice}</TableCell>
+              <TableCell>C$ {product.purchasePrice}</TableCell>
+              <TableCell>C$ {product.sellPrice}</TableCell>
               <TableCell>{product.stock}</TableCell>
-              <TableCell>{product.numberRating}</TableCell>
-              <TableCell>{product.expirationDate}</TableCell>
+              <TableCell>{new Date(product.expirationDate).toLocaleDateString()}</TableCell>
             </TableRow>
           ))}
           pagination={
