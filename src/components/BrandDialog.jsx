@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { Button, Grid, MenuItem } from "@mui/material";
 import { DialogForm } from "./DialogForm";
 import { BrandSchema } from "../schemas/BrandSchema";
 import { createBrand, editBrand } from "../services/brand.services";
+import { TextInput } from "./TextInput";
+import { SelectInput } from "./SelectInput";
 
 export function BrandDialog({ open, setOpen, brand, setBrand }) {
   const queryClient = useQueryClient();
@@ -69,41 +71,21 @@ export function BrandDialog({ open, setOpen, brand, setBrand }) {
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2} justifyContent="flex-end">
             <Grid item xs={12}>
-              <TextField
-                autoFocus
-                fullWidth
-                autoComplete="off"
-                margin="dense"
-                id="name"
-                name="name"
-                label="Categoría"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-              />
+              <TextInput field={"name"} label={"Marca"} formik={formik} />
             </Grid>
             {brand && (
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="isActive"
-                  name="isActive"
-                  select
+                <SelectInput
+                  field={"isActive"}
                   label={"Estado"}
-                  value={formik.values.isActive}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.isActive && Boolean(formik.errors.isActive)
-                  }
-                  helperText={formik.touched.isActive && formik.errors.isActive}
+                  formik={formik}
                 >
                   {options.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>
                   ))}
-                </TextField>
+                </SelectInput>
               </Grid>
             )}
             <Grid item>
