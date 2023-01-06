@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid } from "@mui/material";
+import { TextInput } from "./TextInput";
 import { DialogForm } from "./DialogForm";
 import {
   createPresentation,
@@ -65,23 +66,10 @@ export function PresentationDialog({
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2} justifyContent="flex-end">
             <Grid item xs={12}>
-              <TextField
-                autoFocus
-                fullWidth
-                autoComplete="off"
-                margin="dense"
-                id="description"
-                name="description"
-                label="Descripción"
-                value={formik.values.description}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.description &&
-                  Boolean(formik.errors.description)
-                }
-                helperText={
-                  formik.touched.description && formik.errors.description
-                }
+              <TextInput
+                field={"description"}
+                label={"Descripción"}
+                formik={formik}
               />
             </Grid>
             <Grid item>
