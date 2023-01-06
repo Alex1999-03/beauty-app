@@ -2,7 +2,6 @@ import PercentIcon from "@mui/icons-material/Percent";
 import { Button, Grid, InputAdornment } from "@mui/material";
 import { TextInput } from "./TextInput";
 import { DateInput } from "./DateInput";
-import { DatePicker } from "@mui/x-date-pickers";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { PromotionSchema } from "../schemas/PromotionSchema";
