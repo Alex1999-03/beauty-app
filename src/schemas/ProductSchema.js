@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const ProductSchema = yup.object({
+export const CreateProductSchema = yup.object({
   categoryId: yup.string().required("Es requerida una categoría."),
   brandId: yup.string().required("Es requerida una marca."),
   promotionId: yup.string().required("Es requerida una promoción."),
@@ -37,3 +37,5 @@ export const ProductSchema = yup.object({
       return isValid
     }),
 });
+
+export const EditProductSchema = CreateProductSchema.omit(["images"])

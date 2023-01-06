@@ -1,13 +1,16 @@
 import { useFormik } from "formik";
 import { Button, Grid, MenuItem } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProduct } from "../services/product.services";
+import { createProduct, editProduct } from "../services/product.services";
 import { DialogForm } from "./DialogForm";
 import { useCategoryFetch } from "../hooks/useCategoryFetch";
 import { useBrandFetch } from "../hooks/useBrandFetch";
 import { usePresentationFetch } from "../hooks/usePresentationFetch";
 import { usePromotionFetch } from "../hooks/usePromotionFetch";
-import { ProductSchema } from "../schemas/ProductSchema";
+import {
+  CreateProductSchema,
+  EditProductSchema,
+} from "../schemas/ProductSchema";
 import { TextInput } from "./TextInput";
 import { DateInput } from "./DateInput";
 import { SelectInput } from "./SelectInput";
@@ -27,9 +30,16 @@ export function ProductDialog({ open, setOpen, product, setProduct }) {
     },
   });
 
+  const editProductMutation = useMutation({
+    mutationFn: editProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries("product");
+    },
+  });
+
   const handleClose = () => {
     setOpen();
-    // setBrand(null);
+    setProduct(null);
     formik.resetForm();
   };
 
@@ -42,26 +52,31 @@ export function ProductDialog({ open, setOpen, product, setProduct }) {
       }
     }
 
-    createProductMutation.mutate(formData);
+    if (product) {
+      editProductMutation.mutate({ id: product.id, ...values });
+    } else {
+      createProductMutation.mutate(formData);
+    }
     handleClose();
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      categoryId: "",
-      brandId: "",
-      promotionId: "",
-      presentationId: "",
-      code: "",
-      name: "",
-      description: "",
-      purchasePrice: "",
-      sellPrice: "",
-      stock: "",
-      expirationDate: "",
+      categoryId: product ? product.category.id : "",
+      brandId: product ? product.brand.id : "",
+      promotionId: product ? product.promotion.id : "",
+      presentationId: product ? product.presentation.id : "",
+      code: product ? product.code : "",
+      name: product ? product.name : "",
+      description: product ? product.description : "",
+      purchasePrice: product ? product.purchasePrice : "",
+      sellPrice: product ? product.sellPrice : "",
+      stock: product ? product.stock : "",
+      expirationDate: product ? product.expirationDate : "",
       images: [],
     },
-    validationSchema: ProductSchema,
+    validationSchema: product ? EditProductSchema : CreateProductSchema,
     onSubmit: handleSave,
   });
 
@@ -169,13 +184,16 @@ export function ProductDialog({ open, setOpen, product, setProduct }) {
                 ))}
               </SelectInput>
             </Grid>
-            <Grid item>
-              <UploadButton
-                field="images"
-                text="Subir imagenes"
-                formik={formik}
-              />
-            </Grid>
+            {!product && (
+              <Grid item>
+                <UploadButton
+                  field="images"
+                  text="Subir imagenes"
+                  formik={formik}
+                />
+              </Grid>
+            )}
+
             <Grid item xs={12}></Grid>
             <Grid item>
               <Button variant="contained" color="error" onClick={handleClose}>
