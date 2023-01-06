@@ -1,4 +1,6 @@
-import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import { TextInput } from "./TextInput";
+import { SelectInput } from "./SelectInput";
+import { Button, Grid, MenuItem } from "@mui/material";
 import { DialogForm } from "./DialogForm";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCategory, editCategory } from "../services/category.services";
@@ -69,41 +71,21 @@ export function CategoryDialog({ open, setOpen, category, setCategory }) {
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2} justifyContent="flex-end">
             <Grid item xs={12}>
-              <TextField
-                autoFocus
-                fullWidth
-                autoComplete="off"
-                margin="dense"
-                id="name"
-                name="name"
-                label="Categoría"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
-              />
+              <TextInput field={"name"} label={"Categoría"} formik={formik} />
             </Grid>
             {category && (
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="isActive"
-                  name="isActive"
-                  select
+                <SelectInput
+                  field={"isActive"}
                   label={"Estado"}
-                  value={formik.values.isActive}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.isActive && Boolean(formik.errors.isActive)
-                  }
-                  helperText={formik.touched.isActive && formik.errors.isActive}
+                  formik={formik}
                 >
                   {options.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
                       {option.label}
                     </MenuItem>
                   ))}
-                </TextField>
+                </SelectInput>
               </Grid>
             )}
             <Grid item>
