@@ -1,5 +1,7 @@
-import { Button, Grid, InputAdornment, TextField } from "@mui/material";
 import PercentIcon from "@mui/icons-material/Percent";
+import { Button, Grid, InputAdornment } from "@mui/material";
+import { TextInput } from "./TextInput";
+import { DateInput } from "./DateInput";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useFormik } from "formik";
@@ -62,28 +64,17 @@ export function PromotionDialog({ open, setOpen, promotion, setPromotion }) {
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2} justifyContent="flex-end">
             <Grid item xs={12}>
-              <TextField
-                autoFocus
-                fullWidth
-                autoComplete="off"
-                margin="dense"
-                id="description"
-                name="description"
-                label="Descripción"
-                value={formik.values.description}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.description &&
-                  Boolean(formik.errors.description)
-                }
-                helperText={
-                  formik.touched.description && formik.errors.description
-                }
+              <TextInput
+                field={"description"}
+                label="Description"
+                formik={formik}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
+              <TextInput
+                field={"discount"}
+                label={"Descuento"}
+                formik={formik}
                 inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                 InputProps={{
                   endAdornment: (
@@ -92,62 +83,20 @@ export function PromotionDialog({ open, setOpen, promotion, setPromotion }) {
                     </InputAdornment>
                   ),
                 }}
-                autoComplete="off"
-                margin="dense"
-                id="discount"
-                name="discount"
-                label="Descuento"
-                value={formik.values.discount}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.discount && Boolean(formik.errors.discount)
-                }
-                helperText={formik.touched.discount && formik.errors.discount}
               />
             </Grid>
             <Grid item xs={12}>
-              <DatePicker
-                label="Fecha inicio"
-                value={formik.values.startDate}
-                onChange={(value) => {
-                  formik.setFieldValue("startDate", value, true);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    id="startDate"
-                    name="startDate"
-                    error={
-                      formik.touched.startDate &&
-                      Boolean(formik.errors.startDate)
-                    }
-                    helperText={
-                      formik.touched.startDate && formik.errors.startDate
-                    }
-                  />
-                )}
+              <DateInput
+                field={"startDate"}
+                label={"Fecha inicio"}
+                formik={formik}
               />
             </Grid>
             <Grid item xs={12}>
-              <DatePicker
-                label="Fecha fin"
-                value={formik.values.endDate}
-                onChange={(value) =>
-                  formik.setFieldValue("endDate", value, true)
-                }
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    id="endDate"
-                    name="endDate"
-                    error={
-                      formik.touched.endDate && Boolean(formik.errors.endDate)
-                    }
-                    helperText={formik.touched.endDate && formik.errors.endDate}
-                  />
-                )}
+              <DateInput
+                field={"endDate"}
+                label={"Fecha fin"}
+                formik={formik}
               />
             </Grid>
             <Grid item>
