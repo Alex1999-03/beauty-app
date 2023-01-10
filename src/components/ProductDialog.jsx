@@ -67,7 +67,6 @@ export function ProductDialog({ open, setOpen, product, setProduct }) {
       brandId: product ? product.brand.id : "",
       promotionId: product ? product.promotion.id : "",
       presentationId: product ? product.presentation.id : "",
-      code: product ? product.code : "",
       name: product ? product.name : "",
       description: product ? product.description : "",
       purchasePrice: product ? product.purchasePrice : "",
@@ -90,15 +89,7 @@ export function ProductDialog({ open, setOpen, product, setProduct }) {
       >
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2} justifyContent="flex-end">
-            <Grid item xs={6}>
-              <TextInput
-                field="code"
-                label="Codigo"
-                formik={formik}
-                InputProps={{ autoFocus: true }}
-              />
-            </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextInput field="name" label="Nombre" formik={formik} />
             </Grid>
             <Grid item xs={12}>

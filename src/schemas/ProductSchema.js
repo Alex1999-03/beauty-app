@@ -5,7 +5,6 @@ export const CreateProductSchema = yup.object({
   brandId: yup.string().required("Es requerida una marca."),
   promotionId: yup.string().required("Es requerida una promoción."),
   presentationId: yup.string().required("Es requerida una presentación."),
-  code: yup.string().required("Es requerido un codigo."),
   name: yup.string().required("Es requerido un nombre."),
   description: yup.string().required("Es requerida una descripción."),
   purchasePrice: yup
